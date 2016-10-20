@@ -39,7 +39,7 @@
     // run queries
     $q.all(queries).then(function(data) {
       // prepare contacts map
-      var contacts = contactsMap(data.contacts);
+      var contacts = contactsMap(data.contacts['values']); // TODO: retrieve by id by filtered memberships
       console.log(contacts);
 
       // update persons list
