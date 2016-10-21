@@ -1,19 +1,32 @@
-<div class="crm-container">
-  <div crm-ui-debug="myContact"></div>
 
+
+
+
+
+<div class="crm-container">
   <div>
     <label>
       {{ts('Begin date')}}
-      <input type="date" ng-model="vm.filter.beginDate"/>
+      <input type="text" ng-model="vm.filter.beginDate" placeholder="format yyyy-mm-dd"/>
     </label>
     <label>
       {{ts('End date')}}
-      <input type="date" ng-model="vm.filter.endDate"/>
+      <input type="text" ng-model="vm.filter.endDate" placeholder="format yyyy-mm-dd"/>
     </label>
     <button ng-click="vm.search()">{{ts('Search')}}</button>
-    <ul>
-      <li ng-repeat="p in vm.persons">{{p}}</li>
-    </ul>
+  </div>
+
+
+  <div>
+  <table class="selector row-highlight" ng-show="vm.persons.length">
+    <tr><th>Name</th><th>Type</th><th>Start Date</th><th>Source</th></tr>
+    <tr ng-repeat="p in vm.persons">
+      <td ng-bind="p.display_name"></td>
+      <td ng-bind="p.relationship_name"></td>
+      <td ng-bind="p.start_date"></td>
+      <td ng-bind="p.source"></td>
+    </tr>
+  </table>
   </div>
 
 </div>
