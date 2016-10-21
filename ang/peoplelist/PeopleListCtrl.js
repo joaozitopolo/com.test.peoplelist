@@ -45,13 +45,6 @@
       out = { '<=': val2 }
     }
     return out;
-  } 
-
-  /** maps the contact list by id */
-  function contactsMap(list) {
-    var out = {};
-    angular.forEach(list, function(item) { this[item['id']] = item }, out);
-    return out;
   }
 
 })(angular, CRM.$, CRM._);
