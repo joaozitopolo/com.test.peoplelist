@@ -26,7 +26,7 @@ function civicrm_api3_people_Search($params) {
   $result = civicrm_api3('Membership', 'get', $params);
   $values = $result['values'];
 
-  // find the Contacts
+  // find memberships contacts
   $ids = array();
   foreach($values as $v) {
     $ids[] = $v['contact_id'];
@@ -37,14 +37,19 @@ function civicrm_api3_people_Search($params) {
   ));
   $contacts = $result['values'];
 
-  // merge contacts
+  // prepare out list
   $out = [];
   foreach($values as $v) {
-    $v['contact'] = $contacts[$v['contact_id']];
+    $contact = $contacts[$v['contact_id']];
+    $v['display_name'] = isset($contact) ? $contact['display_name'] : '';
     array_push($out, $v);
   }
 
   // finalize
+  uasort($out, "sort_display_name");
   return civicrm_api3_create_success($out, $params, 'People', 'search');
 }
 
+function sort_display_name($v1, $v2) {
+  return $v1['display_name'] == $v2['display_name'] ? 0 : $v1['display_name'] < $v2['display_name'] ? -1 : 1;
+} 
