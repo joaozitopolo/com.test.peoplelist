@@ -27,29 +27,10 @@
 
   /** search persons using the filters beginDate and endDate */
   function search(filter, persons, $q, crmApi) {
-    var queries = {};
-
-    // simplified contact list
-    queries.contacts = crmApi('Contact', 'getlist'); // [{ id, label }]
-    
-    // finds memberships by start date
     var args = angular.extend({}, { 'start_date': asRangeExpression(filter['beginDate'], filter['endDate']) })
-    queries.memberships = crmApi('Membership', 'get', args);
-
-    // run queries
-    $q.all(queries).then(function(data) {
-      // prepare contacts map
-      var contacts = contactsMap(data.contacts['values']); // TODO: retrieve by id by filtered memberships
-      console.log(contacts);
-
-      // update persons list
+    crmApi('People', 'search', args).then(function(result) {
       persons.splice(0, persons.length);
-      angular.forEach(data.memberships['values'], function(m) { this.push(angular.extend(m, { contact: contacts[m['contact_id']]  } )) }, persons);
-    }); 
-    
-    crmApi('Membership', 'get', {
-    }).then(function(result) {
-      angular.forEach(result['values'], function(value) { this.push(value); }, persons);
+      angular.forEach(result['values'], function(m) { this.push(m); }, persons);
     });
   }
 
