@@ -3,15 +3,16 @@ CiviCRM People List (Memberships, with start date filter)
 
 ## Implementation notes:
 
-PHP:
+### PHP:
+
     Created a API function to search Memberships and merge with the Contact name
     api/v3/People/Search.php
 
-AngularJS:
+### AngularJS:
     Created a single call to People/Search, with optional start date range argument
     ang/peoplelist/PeopleListCtrl.js
 
-CiviCRM:
+### CiviCRM:
     Registered the menu link for the People List
 
 
